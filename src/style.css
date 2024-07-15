@@ -71,6 +71,7 @@ li{
   border-radius: 4px;
   height: 10px;
   background: white;
+  transition: all 0.2s ease;
 }
 .webgl {
   position: fixed;
