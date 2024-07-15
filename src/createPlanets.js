@@ -14,14 +14,13 @@ export const createAllPlanets = async (camera, loadingBar) => {
   const mercury = createMercury();
   const [venusGroup, venus, venusAtmosphere] = createVenus();
   const [marsGroup, mars, phobos, deimos] = await createMars();
-    loadingBar.style.width = "50%"
   const [jupiterGroup, jupiter, io, callisto, ganymede, europa] = createJupiter();
   const [saturnGroup, saturn, titan, rhea, lapetus, dione, tethys] = createSaturn();
   const [uranusGroup, uranus, titania, oberon, umbriel, ariel] = createUranus();
   const [neptuneGroup, neptune, triton] = createNeptune();
   const [sun, sunGlow] = createSun(camera);
 
-  loadingBar.style.width = '90%'
+      loadingBar.style.width = "40%"
 
   return [earthGroup, earth, moon, mercury, venusGroup, venus, venusAtmosphere,
     marsGroup, mars, phobos, deimos, jupiterGroup, jupiter, io, callisto, ganymede, europa,

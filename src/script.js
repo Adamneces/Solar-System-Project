@@ -21,6 +21,8 @@ const aboutBtn = document.getElementById("about");
 const homeBtn = document.getElementById("home");
 const creditsBtn = document.getElementById("credits");
 
+loadingBar.style.width = "15%"
+
 // Scene
 const scene = new THREE.Scene();
 
@@ -143,9 +145,10 @@ async function initialize() {
   // Event listeners for buttons
   setupEventListeners();
 
+  loadingBar.style.width = "80%"
+
   // Start animation loop
   tick();
-  loadingContainer.style.display = "none";
 }
 
 function setupEventListeners() {
@@ -265,6 +268,9 @@ function setupEventListeners() {
 
 // Tick Function
 function tick() {
+  loadingBar.style.width = "100%"
+  loadingContainer.style.display = "none";
+
   window.requestAnimationFrame(tick);
   const elapsedTime = clock.getElapsedTime();
 
