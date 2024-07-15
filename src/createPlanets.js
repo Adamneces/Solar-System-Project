@@ -8,8 +8,7 @@ import { createUranus } from "./Planets/uranusGroup.js";
 import { createNeptune } from "./Planets/neptuneGroup.js";
 import { createSun } from "./Planets/sun.js";
 
-export const createAllPlanets = async (camera, loadingBar) => {
-   loadingBar.style.width = "30%"
+export const createAllPlanets = async (camera) => {
   const [earthGroup, earth, moon] = createEarth();
   const mercury = createMercury();
   const [venusGroup, venus, venusAtmosphere] = createVenus();
@@ -19,8 +18,6 @@ export const createAllPlanets = async (camera, loadingBar) => {
   const [uranusGroup, uranus, titania, oberon, umbriel, ariel] = createUranus();
   const [neptuneGroup, neptune, triton] = createNeptune();
   const [sun, sunGlow] = createSun(camera);
-
-      loadingBar.style.width = "40%"
 
   return [earthGroup, earth, moon, mercury, venusGroup, venus, venusAtmosphere,
     marsGroup, mars, phobos, deimos, jupiterGroup, jupiter, io, callisto, ganymede, europa,

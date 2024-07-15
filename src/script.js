@@ -104,22 +104,40 @@ const planetObject = {
 
 // Initialize Function
 async function initialize() {
+
+  // Initial progress
+  let progress = 0;
+
+  const updateProgress = (increment) => {
+    progress += increment;
+    loadingBar.style.width = `${progress}%`;
+  };
+
+  // Set an interval to simulate continuous progress
+  const progressInterval = setInterval(() => {
+    if (progress < 95) { 
+      progress += 1;
+      loadingBar.style.width = `${progress}%`;
+    }
+  }, 100);
+
   // Environment Map
   textureLoader.load("/textures/solar/milky-way.jpg", (envMap) => {
     envMap.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = envMap;
+    updateProgress(10); 
   });
   scene.backgroundIntensity = 0.04;
 
   const [ earthGroup, earth, moon, mercury, venusGroup, venus, venusAtmosphere, marsGroup, mars, phobos, deimos, jupiterGroup, jupiter, io,
     callisto, ganymede, europa, saturnGroup, saturn, titan, rhea, lapetus, dione, tethys, uranusGroup, uranus, titania, oberon, umbriel, ariel,
-    neptuneGroup, neptune,triton, sun, sunGlow ] = await createAllPlanets(camera, loadingBar);
+    neptuneGroup, neptune,triton, sun, sunGlow ] = await createAllPlanets(camera);
 
   // Assign values to planetObject
   Object.assign(planetObject.planets, { mercury, venus, venusAtmosphere, earth, mars, jupiter, saturn, uranus, neptune, sun, sunGlow });
   Object.assign(planetObject.moons, { moon, phobos, deimos, europa, callisto, io, ganymede, titan, rhea, lapetus, dione, tethys, titania, oberon, umbriel, ariel, triton });
   Object.assign(planetObject.groups, { mercury: mercury, venus: venusGroup, earth: earthGroup, mars: marsGroup, jupiter: jupiterGroup, saturn: saturnGroup, uranus: uranusGroup, neptune: neptuneGroup });
-
+  updateProgress(30);  
 
   const planetsShadows = [ sun, earthGroup, mercury, venus, mars, jupiter, uranus, neptune, camera ];
   planetsShadows.forEach((planet) => {
@@ -139,13 +157,17 @@ async function initialize() {
 
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.015);
 
+  updateProgress(50);
+
   // Add everything to the scene
   scene.add( ambientLight, sunLight, sun, sunGlow, earthGroup, mercury, venusGroup, marsGroup, jupiterGroup, saturnGroup, uranusGroup, neptuneGroup);
 
   // Event listeners for buttons
   setupEventListeners();
 
-  loadingBar.style.width = "80%"
+  clearInterval(progressInterval);
+  loadingBar.style.width = "100%";
+  loadingContainer.style.display = "none";
 
   // Start animation loop
   tick();
@@ -268,9 +290,6 @@ function setupEventListeners() {
 
 // Tick Function
 function tick() {
-  loadingBar.style.width = "100%"
-  loadingContainer.style.display = "none";
-
   window.requestAnimationFrame(tick);
   const elapsedTime = clock.getElapsedTime();
 
