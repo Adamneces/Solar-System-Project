@@ -11,6 +11,7 @@ import { createAllPlanets } from "./createPlanets.js";
 const canvas = document.querySelector("canvas.webgl");
 const planetBtn = document.querySelectorAll(".heading");
 const moonBtn = document.querySelectorAll(".moonGroup button");
+const infoContainer = document.querySelector('.info');
 const infoPanel = document.querySelector(".info-text");
 const infoHeading = document.querySelector(".info-heading");
 
@@ -20,6 +21,7 @@ const loadingBar = document.getElementById("progress-bar");
 const aboutBtn = document.getElementById("about");
 const homeBtn = document.getElementById("home");
 const creditsBtn = document.getElementById("credits");
+const showInfoBtn = document.getElementById("info-btn");
 
 loadingBar.style.width = "15%"
 
@@ -56,6 +58,7 @@ controls.enableDamping = true;
 // Global variables
 let selectedMoon = null;
 let selectedPlanet = null;
+let showInfo = true
 
 const planetObject = {
   planets: {
@@ -271,6 +274,19 @@ function setupEventListeners() {
     camera.position.set(158, 1, 1);
     camera.lookAt(earthGroup.position);
   });
+
+  showInfoBtn.addEventListener('click', () => {
+    showInfo = !showInfo
+
+    if (showInfo){
+      infoContainer.style.display = "block"
+      showInfoBtn.textContent = "X"
+    }
+    else {
+      infoContainer.style.display = "none"
+      showInfoBtn.textContent = "?"
+    }
+  })
 
   // Resize
   window.addEventListener("resize", () => {
